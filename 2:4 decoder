@@ -1,3 +1,16 @@
+//Structure model of 2_to_4 Decoder
+
+module twotofourdecoder(a,b,en,z);
+    input a,b,en;
+    output [0:3]z;
+    wire abar,bbar;
+	 not n0(abar,a);
+	 not n1(bbar,b);
+	 and a0(z[0],en,bbar,abar);
+	 and a1(z[1],en,b,abar);
+	 and a2(z[2],en,bbar,a);
+	 and a3(z[3],en,b,a);
+endmodule
 module decoder_testbench;
   // Inputs
 	reg a;
