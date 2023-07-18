@@ -1,1 +1,53 @@
 // D Flip flop
+module DFlipflop(D,clk,rst,q);
+    input D;
+    input clk;
+    input rst;
+    output q;
+	 reg q;
+	 always@(negedge rst, posedge clk)
+	 if(rst==0)
+	 q=0;
+	 else if(D==0)
+	 q=0;
+	 else if(D==1)
+	 q=1;
+endmodule
+
+//testbench
+module DFlipflop_testbench;
+   // Inputs
+	reg D;
+	reg clk;
+	reg rst;
+   // Outputs
+	wire q;
+  // Instantiate the Unit Under Test (UUT)
+	DFlipflop uut (.D(D),.clk(clk),.rst(rst),.q(q));
+	initial
+	$monitor($time,"D=%b,clk=%b,rst=%b,q=%b",D,rst,clk,q);
+	initial
+	begin
+	// Initialize Inputs
+	rst=1'b0;
+	repeat(20)
+	#40 rst=~rst;
+	end
+	initial
+	begin
+	clk=1'b0;
+	repeat(200)
+	#2 clk=~clk;
+	end
+	initial
+	begin
+	d=1'b0;
+	repeat(200)
+	#4 d=~d;
+	end
+	initial
+// Wait 200 ns for global reset to finish
+#200 $finish;
+endmodule
+
+
