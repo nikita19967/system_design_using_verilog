@@ -1,0 +1,65 @@
+// J-K Flip flop
+module JKff(j,k,clk,rst,q);
+    input j;
+    input k;
+    input clk;
+    input rst;
+    output q;
+    reg q;
+	 always@(negedge rst, posedge clk)
+	 if(rst==0)
+	 q=0;
+	 else if (j==0 & k==0)
+	 q=q;
+	 else if (j==0 & k==1)
+	 q=0;
+	 else if (j==1 & k==0)
+	 q=1;
+	 else if (j==1 & k==1)
+	 q=!q;
+	 endmodule
+
+
+// testbench
+module testbench;
+ // Inputs
+	reg j;
+	reg k;
+	reg clk;
+	reg rst;
+ // Outputs
+	wire q;
+ // Instantiate the Unit Under Test (UUT)
+	JKff uut (.j(j),.k(k),.clk(clk),.rst(rst),.q(q));
+	initial
+	$monitor ( $time,"j=%b,k=%b,clk=%b,rst=%b,q=%b",j,k,clk,rst,q);
+	initial 
+	begin
+	// Initialize Inputs
+	rst=1'b0;
+	repeat(10)
+	#20 rst=~rst;
+	end 
+	initial
+	begin
+	clk=1'b0;
+	repeat(30)
+	#2 clk=~clk;
+	end
+	initial
+	begin
+	j=1'b0;
+	repeat(30)
+	#2 j=~j;
+	end
+	initial
+	begin
+	k=1'b0;
+	repeat(30)
+	#3 k=~k;
+	end
+	initial
+	// Wait 100 ns for global reset to finish
+	#200 $finish;
+endmodule
+
