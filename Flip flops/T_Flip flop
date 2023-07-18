@@ -1,1 +1,52 @@
+// T flip flop
+module T_flip_flop(t,clk,rst,q);
+    input t;
+    input clk;
+    input rst;
+    output q;
+	 reg q;
+always@(negedge rst, posedge clk)
+if (rst==0)
+q=0;
+else if(t==0)
+q=q;
+else if (t==1)
+q=!q;
+endmodule
+
+
+//Testbench
+module Ttestbench;
+// Inputs
+	reg t;
+	reg clk;
+	reg rst;
+// Outputs
+	wire q;
+// Instantiate the Unit Under Test (UUT)
+	T_flip_flop uut (.t(t),.clk(clk),.rst(rst),.q(q));
+	initial
+	$monitor ($time,"t=%b,clk==%b,rst==%b,q==%b",t,clk,rst,q);
+	initial
+	begin
+	rst=1'b0;
+	repeat(20)
+	#40 rst=~rst;
+	end
+	initial
+	begin
+	clk=1'b0;
+	repeat(200)
+	#2 clk=~clk;
+	end
+	initial
+	begin
+	t=1'b0;
+	repeat(200)
+	#4 t=~t;
+	end
+	initial
+	#200 $finish;
+endmodule
+
 
