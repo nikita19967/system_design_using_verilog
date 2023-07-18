@@ -1,0 +1,21 @@
+module decoder_testbench;
+  // Inputs
+	reg a;
+	reg b;
+	reg en;
+  // Outputs
+	wire [0:3] z;
+  // Instantiate the Unit Under Test (UUT)
+	twotofourdecoder uut (.a(a),.b(b),.en(en),.z(z));
+	initial
+	begin
+	$monitor($time,"a=%b,b=%b,en=%b,z[0]=%b,z[1]=%b,z[2]=%b,z[3]=%b",a,b,en,z[0],z[1],z[2],z[3]);
+		// Initialize Inputs
+#5 a = 0;b=0;en=1;
+#5 a = 0;b=1;en=1;
+#5 a = 1;b=0;en=1;
+#5 a = 1;b=1;en=1;
+#5 a = 0;b=0;en=0;
+#5 $finish;
+end
+endmodule
