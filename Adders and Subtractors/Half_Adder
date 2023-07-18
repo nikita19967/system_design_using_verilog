@@ -1,1 +1,36 @@
+// Half adder
+module half_adder(a,b,s,c);
+    input a;
+    input b;
+    output s;
+    output c;
+	 reg s,c;
+always@(a,b)
+begin
+s=a^b;
+c=a&b;
+end
+endmodule
 
+
+//testbench
+module Halfaddertestbench;
+// Inputs
+	reg a_tb;
+	reg b_tb;
+// Outputs
+	wire s_tb;
+	wire c_tb;
+// Instantiate the Unit Under Test (UUT)
+	half_adder uut (.a(a_tb),.b(b_tb),.s(s_tb),.c(c_tb));
+	initial
+  $monitor($time,"a_tb=%b,b_tb=%b,s_tb=%b,c_tb=%b",a_tb,b_tb,s_tb,c_tb);
+  initial 
+   begin
+		// Initialize Inputs
+#5 a_tb=0;b_tb=0;
+#5 a_tb=0;b_tb=1;
+#5 a_tb=1;b_tb=0;
+#5 a_tb=1;b_tb=1;
+end
+endmodule
