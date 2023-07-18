@@ -1,0 +1,43 @@
+//3_bit_UP counter
+module threebitcounter(clk,rst,q);
+    input clk;
+    input rst;
+    output [2:0] q;
+	 reg [2:0]q;
+    always@( posedge clk, negedge rst)
+	 if (!rst==0)
+	 q=3'b000;
+	 else
+	 q=q+001;
+endmodule
+
+//Testbench
+module testbench;
+  // Inputs
+	reg clk;
+	reg rst;
+  // Outputs
+	wire [2:0] q;
+  // Instantiate the Unit Under Test (UUT)
+	threebitcounter uut (.clk(clk),.rst(rst),.q(q));
+	initial 
+	$monitor($time,"clk=%b,rst=%b,q=%b",clk,rst,q);
+	// Initialize Inputs
+	initial
+	begin
+	rst=1'b0;
+	repeat(40)
+	#40 rst=~rst;
+	end
+	initial
+	begin
+	clk=1'b0;
+	repeat(100)
+	#2 clk=~clk;
+	end
+	initial
+	// Wait 100 ns for global reset to finish
+	#200 $finish;
+endmodule
+
+
