@@ -1,0 +1,7 @@
+// And gate using simple python code
+import numpy as np
+def andgate (input1,input2):
+    return input1*input2;
+//Output
+andgate (10,20)
+200
